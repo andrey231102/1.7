@@ -1,0 +1,101 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
+
+//У нас есть список всех преступников.
+//В преступнике есть поля: ФИО, заключен ли он под стражу, рост, вес, национальность.
+//Вашей программой будут пользоваться детективы.
+//У детектива запрашиваются данные (рост, вес, национальность), и детективу выводятся все преступники,
+//которые подходят под эти параметры, но уже заключенные под стражу выводиться не должны.
+
+namespace LINQhomework1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Database database = new Database();
+            int inputHeight = default;
+            int inputWeight = default;
+            Console.WriteLine("введите имя преступника");
+            string inputName = Console.ReadLine();
+
+            Console.WriteLine("введите рост преступника");
+            inputHeight = GetNumber(inputHeight);
+            Console.WriteLine("введите вес преступника");
+            inputWeight = GetNumber(inputWeight);
+            Console.WriteLine("введите национальность преступника");
+            string inputNationality = Console.ReadLine();
+
+            database.FindCriminals(inputName, inputHeight, inputWeight, inputNationality);
+
+        }
+
+        static int GetNumber(int inputNumber)
+        {
+            bool isWorking = true;
+            while (isWorking)
+            {
+                if (false == int.TryParse(Console.ReadLine(), out inputNumber))
+                {
+                    Console.WriteLine("Это не число, попробуйте еще раз");
+                }
+                else
+                {
+                    isWorking = false;
+                }
+            }
+            return inputNumber;
+        }
+    }
+
+    class Database
+    {
+        private List<Criminal> _criminals = new List<Criminal>
+        {
+            new Criminal("Борис", 180, 80, "шахид", false),
+            new Criminal("Джон", 170, 70, "британец", true),
+            new Criminal("Майкл", 200, 120, "африканец", true),
+            new Criminal("Сегун", 140, 70, "японец", false),
+            new Criminal("Педро", 180, 68, "итальянец", false),
+            new Criminal("Генри", 183, 90, "британец", true)
+        };
+
+        public void FindCriminals(string criminalName, int criminalHeight, int criminalWeight, string criminalNationality)
+        {
+            var notCaughtCriminals = _criminals.Where(criminal=> (criminal.Name == criminalName || criminal.Height == criminalHeight || criminal.Weight == criminalWeight || criminal.Nationality == criminalNationality) && criminal.IsPrisoned == false);
+
+            Console.WriteLine("Под ваши параметры подходят такие непойманные преступники");
+
+            foreach (var criminal in notCaughtCriminals)
+            {
+                criminal.ShowInfo();
+            }
+        }
+    }
+
+    class Criminal
+    {
+        public string Name { get; private set; }
+        public int Height { get; private set; }
+        public int Weight { get; private set; }
+        public string Nationality { get; private set; }
+        public bool IsPrisoned { get; private set; }
+
+        public Criminal(string name, int height, int weight, string nationality, bool isImprisoned)
+        {
+            Name = name;
+            Height = height;
+            Weight = weight;
+            Nationality = nationality;
+            IsPrisoned = isImprisoned;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{Name} рост - {Height}см вес - {Weight}кг национальность - {Nationality}");
+        }
+    }
+}
