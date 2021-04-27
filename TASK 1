@@ -19,8 +19,6 @@ namespace LINQhomework1
             Database database = new Database();
             int inputHeight = default;
             int inputWeight = default;
-            Console.WriteLine("введите имя преступника");
-            string inputName = Console.ReadLine();
 
             Console.WriteLine("введите рост преступника");
             inputHeight = GetNumber(inputHeight);
@@ -29,7 +27,7 @@ namespace LINQhomework1
             Console.WriteLine("введите национальность преступника");
             string inputNationality = Console.ReadLine();
 
-            database.FindCriminals(inputName, inputHeight, inputWeight, inputNationality);
+            database.FindCriminals(inputHeight, inputWeight, inputNationality);
 
         }
 
@@ -63,9 +61,9 @@ namespace LINQhomework1
             new Criminal("Генри", 183, 90, "британец", true)
         };
 
-        public void FindCriminals(string criminalName, int criminalHeight, int criminalWeight, string criminalNationality)
+        public void FindCriminals(int criminalHeight, int criminalWeight, string criminalNationality)
         {
-            var notCaughtCriminals = _criminals.Where(criminal=> (criminal.Name == criminalName || criminal.Height == criminalHeight || criminal.Weight == criminalWeight || criminal.Nationality == criminalNationality) && criminal.IsPrisoned == false);
+            var notCaughtCriminals = _criminals.Where(criminal=> (criminal.Height == criminalHeight || criminal.Weight == criminalWeight || criminal.Nationality == criminalNationality) && criminal.IsPrisoned == false);
 
             Console.WriteLine("Под ваши параметры подходят такие непойманные преступники");
 
