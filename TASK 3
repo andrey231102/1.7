@@ -1,0 +1,90 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
+
+namespace linqhomework3
+{
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Hospital hospital = new Hospital();
+            Console.WriteLine("1 - Отсортировать всех больных по фио. 2 - Отсортировать всех больных по возрасту. 3 - Вывести больных с определенным заболеванием");
+            string userInput = Console.ReadLine();
+            hospital.SortPatients(userInput);
+        }
+    }
+
+    class Hospital
+    {
+        private List<Patient> _patients = new List<Patient>
+        { 
+            new Patient("Андрей",18,"Сифилис"),
+            new Patient("Никита",19,"Гепатит"),
+            new Patient("Джон",28,"Драконье поверье"),
+            new Patient("Марк",20,"Простуда"),
+            new Patient("Алексей",25,"Ковид"),
+            new Patient("Максив",56,"Перелом"),
+            new Patient("Питер",43,"Ковид"),
+            new Patient("Бен",35,"Ковид"),
+            new Patient("Дональд",60,"Сифилис"),
+        };
+
+        public void SortPatients(string userInput)
+        {
+            switch (userInput)
+            {
+                case "1":
+                    var sortedByName = _patients.OrderBy(patient=>patient.Name);
+                    ShowSortedPatients(sortedByName);
+                    break;
+                case "2":
+                    var sortedByAge = _patients.OrderBy(patient => patient.Age);
+                    ShowSortedPatients(sortedByAge);
+                    break;
+                case "3":
+                    Console.WriteLine("Введите болезнь");
+                    string illnessInput = Console.ReadLine();
+                    var sortedByillness = _patients.Where(patient => patient.Illness == illnessInput);
+                    foreach (var patient in sortedByillness)
+                    {
+                        patient.ShowInfo();
+                    }
+                    break;
+                default:
+                    Console.WriteLine("такой функции нету");
+                    break;
+            }
+        }
+
+        public void ShowSortedPatients(IOrderedEnumerable<Patient> sortedPacients) 
+        {
+            foreach (var patient in sortedPacients)
+            {
+                patient.ShowInfo();
+            }
+        }
+    }
+
+    class Patient
+    {
+        public string Name { get; }
+        public int Age { get; }
+        public string Illness;
+
+        public Patient(string name, int age, string illness)
+        {
+            Name = name;
+            Age = age;
+            Illness = illness;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{Name} {Age} лет болезнь - {Illness}");
+        }
+    }
+}
