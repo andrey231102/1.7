@@ -39,15 +39,15 @@ namespace linqhomework4
         public void SortByLevel()
         {
             Console.WriteLine("Топ 3 игрока по уровню");
-            var SortedByLevel = _players.OrderByDescending(player => player.Level).Take(_amountOfTopPlayers);
-            ShowPlayers(SortedByLevel);
+            var sortedByLevel = _players.OrderByDescending(player => player.Level).Take(_amountOfTopPlayers);
+            ShowPlayers(sortedByLevel);
         }
 
         public void SortByPower()
         {
             Console.WriteLine("Топ 3 игрока по силе");
-            var SortedByPower = _players.OrderByDescending(player => player.Power).Take(_amountOfTopPlayers);
-            ShowPlayers(SortedByPower);
+            var sortedByPower = _players.OrderByDescending(player => player.Power).Take(_amountOfTopPlayers);
+            ShowPlayers(sortedByPower);
         }
 
         public void ShowPlayers(IEnumerable<Player> sortedPlayers)
