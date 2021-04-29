@@ -59,12 +59,8 @@ namespace linqhomework3
                     case "3":
                         Console.WriteLine("Введите болезнь");
                         string illnessInput = Console.ReadLine();
-                        var sortedByillness = _patients.Where(patient => patient.Illness == illnessInput);
-                        ShowSortedPatients(sortedByillness);
-                        //foreach (var patient in sortedByillness)
-                        //{
-                        //    patient.ShowInfo();
-                        //}
+                        var sortedByIllness = _patients.Where(patient => patient.Illness == illnessInput);
+                        ShowSortedPatients(sortedByIllness);
                         break;
                     case "4":
                         Console.WriteLine("Вы покинули программу");
@@ -73,10 +69,11 @@ namespace linqhomework3
                         Console.WriteLine("такой функции нету");
                         break;
                 }
+                Console.WriteLine("Введите следующую команду");
             }
         }
 
-        public void ShowSortedPatients(IOrderedEnumerable<Patient> sortedPacients) 
+        public void ShowSortedPatients(IEnumerable<Patient> sortedPacients) 
         {
             foreach (var patient in sortedPacients)
             {
