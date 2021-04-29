@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
+
+//Есть набор тушенки. У тушенки есть название, год производства и срок годности.
+//Написать запрос для получения всех просроченных банок тушенки.
+//Чтобы не заморачиваться, можете думать, что считаем только года, без месяцев.
+
+namespace linqhomework5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int inputYear = default;
+            Shop shop = new Shop();
+            Console.WriteLine("Введите какой сегодня год");
+            inputYear = GetNumber(inputYear);
+            shop.CreateWarehouse();
+            shop.FindExpiredProducts(inputYear);
+        }
+
+        static int GetNumber(int inputNumber)
+        {
+            bool isWorking = true;
+            while (isWorking)
+            {
+                if (false == int.TryParse(Console.ReadLine(), out inputNumber))
+                {
+                    Console.WriteLine("Это не число, попробуйте еще раз");
+                }
+                else
+                {
+                    isWorking = false;
+                }
+            }
+            return inputNumber;
+        }
+
+        class Shop
+        {
+            List<Stew> _cans = new List<Stew>();
+            Random _random = new Random();
+            public List<Stew> CreateWarehouse()
+            {
+                for (int i = 0; i < _random.Next(10, 21); i++)
+                {
+                    int manufactureYear = _random.Next(2012, 2022);
+                    int expirationYear = manufactureYear + _random.Next(1, 4);
+                    _cans.Add(new Stew("говядина", manufactureYear, expirationYear));
+                }
+                return _cans;
+            }
+
+            public void FindExpiredProducts(int realYear)
+            {
+                Console.WriteLine("На складе такие продукты:");
+                ShowProducts(_cans);
+                var expiredProducts = _cans.Where(can => (realYear - can.ExperationDate >= can.ExperationDate - can.ManufactureYear) || realYear < can.ManufactureYear);
+                Console.WriteLine();
+                Console.WriteLine("просрочено:");
+                ShowProducts(expiredProducts);
+            }
+
+            public void ShowProducts(IEnumerable<Stew> products)
+            {
+                foreach (var product in products)
+                {
+                    product.ShowInfo();
+                }
+            }
+        }
+
+        class Stew
+        {
+            public string Name { get; private set; }
+            public int ManufactureYear { get; private set; }
+            public int ExperationDate { get; private set; }
+
+            public Stew(string name, int manufactureYear, int experationDate)
+            {
+                Name = name;
+                ManufactureYear = manufactureYear;
+                ExperationDate = experationDate;
+
+            }
+
+            public void ShowInfo()
+            {
+                Console.WriteLine($"{Name} изготовлено в {ManufactureYear}году сьесть до{ExperationDate} года");
+            }
+        }
+    }
+}
