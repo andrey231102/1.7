@@ -1,0 +1,80 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
+
+namespace linqhomework4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ScoreTable scoreTable = new ScoreTable();
+            scoreTable.SortByLevel();
+            Console.WriteLine();
+            scoreTable.SortByPower();
+        }
+    }
+
+    class ScoreTable
+    {
+        private int _amountOfTopPlayers = 3;
+
+        private List<Player> _players = new List<Player>
+        {
+            new Player("redrum",95,43),
+            new Player("cestlavie",79,75),
+            new Player("zantaru",82,43),
+            new Player("malfurion",38,59),
+            new Player("ori",88,32),
+            new Player("sekiro",75,75),
+            new Player("leonardo",80,93),
+            new Player("V",78,87),
+            new Player("silverhand",99,99),
+            new Player("arkham_knight",100,100),
+            new Player("croft",74,52)
+        };
+
+        public void SortByLevel()
+        {
+            Console.WriteLine("Топ 3 игрока по уровню");
+            var SortedByLevel = _players.OrderByDescending(player => player.Level).Take(_amountOfTopPlayers);
+            ShowPlayers(SortedByLevel);
+        }
+
+        public void SortByPower()
+        {
+            Console.WriteLine("Топ 3 игрока по силе");
+            var SortedByPower = _players.OrderByDescending(player => player.Power).Take(_amountOfTopPlayers);
+            ShowPlayers(SortedByPower);
+        }
+
+        public void ShowPlayers(IEnumerable<Player> sortedPlayers)
+        {
+            foreach (var player in sortedPlayers)
+            {
+                player.ShowInfo();
+            }
+        }
+    }
+
+    class Player
+    {
+        public string Name { get; private set; }
+        public int Level { get; private set; }
+        public int Power { get; private set; }
+
+        public Player(string name, int level, int power)
+        {
+            Name = name;
+            Level = level;
+            Power = power;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{Name} уровень - {Level} сила - {Power}");
+        }
+    }
+}
