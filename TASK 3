@@ -60,7 +60,6 @@ namespace linqhomework3
                         Console.WriteLine("такой функции нету");
                         break;
                 }
-                Console.WriteLine("Введите следующую команду");
             }
         }
 
@@ -77,7 +76,7 @@ namespace linqhomework3
     {
         public string Name { get; }
         public int Age { get; }
-        public string Illness;
+        public string Illness { get; }
 
         public Patient(string name, int age, string illness)
         {
