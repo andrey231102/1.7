@@ -7,14 +7,21 @@ using System.Linq;
 namespace linqhomework3
 {
 
+//У вас есть список больных(минимум 10 записей)
+//Класс больного состоит из полей: ФИО, возраст, заболевание.
+//Требуется написать программу больницы, в которой перед пользователем будет меню со следующими пунктами:
+//1)Отсортировать всех больных по фио
+//2)Отсортировать всех больных по возрасту
+//3)Вывести больных с определенным заболеванием
+//(название заболевания вводится пользователем с клавиатуры)
+
     class Program
     {
         static void Main(string[] args)
         {
             Hospital hospital = new Hospital();
-            Console.WriteLine("1 - Отсортировать всех больных по фио. 2 - Отсортировать всех больных по возрасту. 3 - Вывести больных с определенным заболеванием");
-            string userInput = Console.ReadLine();
-            hospital.SortPatients(userInput);
+            Console.WriteLine("1 - Отсортировать всех больных по фио. 2 - Отсортировать всех больных по возрасту. 3 - Вывести больных с определенным заболеванием. 4 - выйти из программы");
+            hospital.SortPatients();
         }
     }
 
@@ -33,30 +40,39 @@ namespace linqhomework3
             new Patient("Дональд",60,"Сифилис"),
         };
 
-        public void SortPatients(string userInput)
+        public void SortPatients()
         {
-            switch (userInput)
+            string userInput = default;
+            while (userInput != "4")
             {
-                case "1":
-                    var sortedByName = _patients.OrderBy(patient=>patient.Name);
-                    ShowSortedPatients(sortedByName);
-                    break;
-                case "2":
-                    var sortedByAge = _patients.OrderBy(patient => patient.Age);
-                    ShowSortedPatients(sortedByAge);
-                    break;
-                case "3":
-                    Console.WriteLine("Введите болезнь");
-                    string illnessInput = Console.ReadLine();
-                    var sortedByillness = _patients.Where(patient => patient.Illness == illnessInput);
-                    foreach (var patient in sortedByillness)
-                    {
-                        patient.ShowInfo();
-                    }
-                    break;
-                default:
-                    Console.WriteLine("такой функции нету");
-                    break;
+                userInput = Console.ReadLine();
+                switch (userInput)
+                {
+                    case "1":
+                        var sortedByName = _patients.OrderBy(patient => patient.Name);
+                        ShowSortedPatients(sortedByName);
+                        break;
+                    case "2":
+                        var sortedByAge = _patients.OrderBy(patient => patient.Age);
+                        ShowSortedPatients(sortedByAge);
+                        break;
+                    case "3":
+                        Console.WriteLine("Введите болезнь");
+                        string illnessInput = Console.ReadLine();
+                        var sortedByillness = _patients.Where(patient => patient.Illness == illnessInput);
+                        ShowSortedPatients(sortedByillness);
+                        //foreach (var patient in sortedByillness)
+                        //{
+                        //    patient.ShowInfo();
+                        //}
+                        break;
+                    case "4":
+                        Console.WriteLine("Вы покинули программу");
+                        break;
+                    default:
+                        Console.WriteLine("такой функции нету");
+                        break;
+                }
             }
         }
 
