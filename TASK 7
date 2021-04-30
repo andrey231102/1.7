@@ -17,7 +17,7 @@ namespace linqhomework7
 
     class Database
     {
-        private List<Soldier> _eliteSoldiers = new List<Soldier>
+        private List<Soldier> _eleteSquad = new List<Soldier>
         {
             new Soldier("Андрей"),
             new Soldier("Назар"),
@@ -25,19 +25,22 @@ namespace linqhomework7
             new Soldier("Джон"),
             new Soldier("Борис"),
         };
-        private List<Soldier> _commonSoldiers = new List<Soldier>();
+        private List<Soldier> _commonSquad = new List<Soldier>();
 
         public void TransferSoldier()
         {
-            var sortedSoldiers = _commonSoldiers.Union(_eliteSoldiers.Where(soldier => soldier.Name.StartsWith("Б")));
+            var commonSoldiers = _commonSquad.Union(_eleteSquad.Where(soldier => soldier.Name.StartsWith("Б"))).ToList();
+            var eliteSoldiers = _eleteSquad.Where(soldier => soldier.Name.StartsWith("Б") == false).ToList();
+            _eleteSquad = eliteSoldiers;
+            _commonSquad = commonSoldiers;
+
             Console.WriteLine("крутой отряд покинули все солдаты у кого имя начинается на букву Б:");
-            foreach (var soldier in sortedSoldiers)
+            foreach (var soldier in _commonSquad)
             {
                 soldier.ShowInfo();
             }
         }
     }
-
     class Soldier
     {
         public string Name { get; }
