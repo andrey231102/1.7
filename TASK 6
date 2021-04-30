@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
+
+namespace linqhomework6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Database database = new Database();
+            database.ShowSoldiersServiceTime();
+        }
+    }
+
+    class Database
+    {
+        private List<Soldier> _soldiers = new List<Soldier>
+        {
+            new Soldier("Петров","АК-47","рядовой",99),
+            new Soldier("Семен","АК-74","сержант",12),
+            new Soldier("Джон","M4","полковник",3),
+            new Soldier("Бен","РПГ-7","танкист",15),
+            new Soldier("Макс","пулемет","прапорщик", 100)
+        };
+
+        public void ShowSoldiersServiceTime()
+        {
+            var soldiersServiceTime = _soldiers;
+            foreach (var soldier in soldiersServiceTime)
+            {
+                Console.WriteLine(soldier.Name + " - " + soldier.Rank);
+            }
+        }
+    }
+
+    class Soldier
+    {
+        public string Name { get; }
+        public string Weapon { get; }
+        public string Rank { get; }
+        public int ServiceTime { get; }
+        
+        public Soldier(string name, string weapon, string rank, int serviceTime)
+        {
+            Name = name;
+            Weapon = weapon;
+            Rank = rank;
+            ServiceTime = serviceTime;
+        }
+    }
+}
