@@ -28,8 +28,8 @@ namespace linqhomework6
 
         public void ShowSoldiersRank()
         {
-            var soldiers = _soldiers;
-            foreach (var soldier in soldiers)
+            var soldiersRanks = _soldiers;
+            foreach (var soldier in soldiersRanks)
             {
                 Console.WriteLine(soldier.Name + " - " + soldier.Rank);
             }
