@@ -1,1 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
 
+namespace linqhomework7
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Country country = new Country();
+            country.Amnesty();
+        }
+    }
+
+    class Country
+    {
+        private List<Prisoner> _prisoners = new List<Prisoner>
+        {
+            new Prisoner("артем","вор"),
+            new Prisoner("джон","убийца"),
+            new Prisoner("василий","мошенник"),
+            new Prisoner("петр","взломщик"),
+            new Prisoner("семен","плохой человек"),
+        };
+
+        public void Amnesty()
+        {
+            Console.WriteLine("До амнистии в тюрьме были такие люди:");
+            ShowPrisoners(_prisoners);
+            var justifiedPrisoners = _prisoners.Where(prisoner => prisoner.IsJustified == false).ToList();
+            var unJustifiedPrisoners = _prisoners.Where(prisoner => prisoner.IsJustified == true).ToList();
+            _prisoners = unJustifiedPrisoners;
+            Console.WriteLine("После в амнистии в тюрьме остались такие плохие люди:");
+            ShowPrisoners(_prisoners);
+        }
+
+        private void ShowPrisoners(List<Prisoner> prisoners)
+        {
+            foreach (var prisoner in prisoners)
+            {
+                prisoner.ShowInfo();
+            }
+        }
+    }
+
+    class Prisoner
+    {
+        public string Name { get; }
+        public string Crime { get; }
+        public bool IsJustified { get; }
+
+        public Prisoner(string name, string crime)
+        {
+            Name = name;
+            Crime = crime;
+            IsJustified = false;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{Name} - {Crime}");
+        }
+    }
+}
