@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
+
+namespace linqhomework7
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Database database = new Database();
+            database.TransferSoldier();
+        }
+    }
+
+    class Database
+    {
+        private List<Soldier> _eliteSoldiers = new List<Soldier>
+        {
+            new Soldier("Андрей"),
+            new Soldier("Назар"),
+            new Soldier("Богдан"),
+            new Soldier("Джон"),
+            new Soldier("Борис"),
+        };
+        private List<Soldier> _commonSoldiers = new List<Soldier>();
+
+        public void TransferSoldier()
+        {
+            var sortedSoldiers = _commonSoldiers.Union(_eliteSoldiers.Where(soldier => soldier.Name.StartsWith("Б")));
+            Console.WriteLine("крутой отряд покинули все солдаты у кого имя начинается на букву Б:");
+            foreach (var soldier in sortedSoldiers)
+            {
+                soldier.ShowInfo();
+            }
+        }
+    }
+
+    class Soldier
+    {
+        public string Name { get; }
+
+        public Soldier(string name)
+        {
+            Name = name;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine(Name);
+        }
+    }
+}
