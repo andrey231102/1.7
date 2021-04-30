@@ -41,6 +41,7 @@ namespace linqhomework7
             }
         }
     }
+    
     class Soldier
     {
         public string Name { get; }
