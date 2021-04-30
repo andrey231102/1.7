@@ -11,7 +11,7 @@ namespace linqhomework6
         static void Main(string[] args)
         {
             Database database = new Database();
-            database.ShowSoldiersServiceTime();
+            database.ShowSoldiersRank();
         }
     }
 
@@ -26,10 +26,10 @@ namespace linqhomework6
             new Soldier("Макс","пулемет","прапорщик", 100)
         };
 
-        public void ShowSoldiersServiceTime()
+        public void ShowSoldiersRank()
         {
-            var soldiersServiceTime = _soldiers;
-            foreach (var soldier in soldiersServiceTime)
+            var soldiersRanks = _soldiers;
+            foreach (var soldier in soldiersRanks)
             {
                 Console.WriteLine(soldier.Name + " - " + soldier.Rank);
             }
@@ -42,7 +42,7 @@ namespace linqhomework6
         public string Weapon { get; }
         public string Rank { get; }
         public int ServiceTime { get; }
-        
+
         public Soldier(string name, string weapon, string rank, int serviceTime)
         {
             Name = name;
