@@ -19,22 +19,36 @@ namespace linqhomework7
     {
         private List<Prisoner> _prisoners = new List<Prisoner>
         {
-            new Prisoner("артем","вор"),
-            new Prisoner("джон","убийца"),
+            new Prisoner("артем","антиправительство"),
+            new Prisoner("джон","антиправительство"),
             new Prisoner("василий","мошенник"),
-            new Prisoner("петр","взломщик"),
-            new Prisoner("семен","плохой человек"),
+            new Prisoner("петр","антиправительство"),
+            new Prisoner("семен","антиправительство"),
         };
 
         public void Amnesty()
         {
-            Console.WriteLine("До амнистии в тюрьме были такие люди:");
+            Console.WriteLine("До амнистии в тюрьме были такие плохие люди:");
             ShowPrisoners(_prisoners);
-            var justifiedPrisoners = _prisoners.Where(prisoner => prisoner.IsJustified == false).ToList();
-            var unJustifiedPrisoners = _prisoners.Where(prisoner => prisoner.IsJustified == true).ToList();
-            _prisoners = unJustifiedPrisoners;
-            Console.WriteLine("После в амнистии в тюрьме остались такие плохие люди:");
+            var filtredPrisoners = _prisoners.Where(prisoner => prisoner.Crime == "антиправительство").ToList();
+            ReleasePrisoners(filtredPrisoners, _prisoners);
+            Console.WriteLine();
+            Console.WriteLine("После амнистии в тюрьме остались такие плохие люди:");
             ShowPrisoners(_prisoners);
+        }
+
+        private void ReleasePrisoners(List <Prisoner> justifiedPrisoners, List<Prisoner> prisoners)
+        {
+            for (int i = 0; i < justifiedPrisoners.Count; i++)
+            {
+                for (int j = 0; j < prisoners.Count; j++)
+                {
+                    if (prisoners[j] == justifiedPrisoners[i])
+                    {
+                        prisoners.RemoveAt(j);
+                    }
+                }
+            }
         }
 
         private void ShowPrisoners(List<Prisoner> prisoners)
@@ -50,13 +64,11 @@ namespace linqhomework7
     {
         public string Name { get; }
         public string Crime { get; }
-        public bool IsJustified { get; }
 
         public Prisoner(string name, string crime)
         {
             Name = name;
             Crime = crime;
-            IsJustified = false;
         }
 
         public void ShowInfo()
