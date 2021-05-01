@@ -30,8 +30,8 @@ namespace linqhomework7
         {
             Console.WriteLine("До амнистии в тюрьме были такие плохие люди:");
             ShowPrisoners(_prisoners);
-            var filtredPrisoners = _prisoners.Where(prisoner => prisoner.Crime == "антиправительство").ToList();
-            ReleasePrisoners(filtredPrisoners, _prisoners);
+            var justifiedPrisoners = _prisoners.Where(prisoner => prisoner.Crime == "антиправительство").ToList();
+            ReleasePrisoners(justifiedPrisoners, _prisoners);
             Console.WriteLine();
             Console.WriteLine("После амнистии в тюрьме остались такие плохие люди:");
             ShowPrisoners(_prisoners);
